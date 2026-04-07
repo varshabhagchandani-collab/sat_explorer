@@ -241,8 +241,7 @@ tbody td{padding:10px 12px;vertical-align:middle;}
     <div class="bands-title">&#127919; Universities by SAT score band — click to explore</div>
     <div class="band-grid" id="band-grid"></div>
   </div>
-  <div id="band-detail" class="band-detail section-gap" style="display:none"></div>
-  <div class="filters-bar section-gap">
+<div class="filters-bar section-gap">
     <div class="filters-inner">
       <div class="fi"><label>Country</label><select id="f-country"><option value="">All countries</option></select></div>
       <div class="fi"><label>Tier</label><select id="f-tier"><option value="">All tiers</option></select></div>
@@ -566,7 +565,16 @@ function getExtra(n) {
     tuitionUSD: Math.round(ct*tm), living: Math.round(cl),
     scholarships: ["Merit Scholarship (varies)","Need-Based Aid","International Student Award"],
     avgSalary: Math.round(({USA:80000,UK:45000,Canada:55000,Australia:50000,Europe:45000,Asia:40000,"Middle East":45000,India:20000}[u.country]||45000)*tm),
-    topRecruiters: ["Top MNCs","Consulting","Tech","Finance"],
+    topRecruiters: (function(){
+      var byTier={
+        1:["Google","McKinsey","Goldman Sachs","Microsoft","Apple"],
+        2:["Amazon","Deloitte","JP Morgan","BCG","Meta"],
+        3:["Accenture","IBM","TCS","Infosys","EY"],
+        4:["Wipro","Capgemini","HCL","Cognizant","KPMG"],
+        5:["Local firms","Government","SMEs","Startups","NGOs"]
+      };
+      return byTier[u.tier]||["Accenture","IBM","TCS","EY","Deloitte"];
+    }()),
     placementRate: {1:95,2:88,3:80,4:72,5:65}[u.tier]||80
   };
 }
@@ -621,7 +629,7 @@ function unlockResults(){
   if(isNaN(ts)||ts<400||ts>1600){alert("Please enter a valid target SAT score (400-1600)");return;}
   if(ts<=cs){alert("Target score should be higher than current score!");return;}
   curScore=cs;tgtScore=ts;scoresUnlocked=true;
-  updateJourney();buildBands();render();
+  updateJourney();render();
   document.getElementById("journey-section").style.display="block";
   document.querySelector(".wrap").scrollIntoView({behavior:"smooth",block:"start"});
 }
@@ -640,6 +648,7 @@ function updateJourney(){
   var curBandIdx=SAT_BANDS.findIndex(function(b){return curScore>=b.min&&curScore<=b.max;});
   var tgtBandIdx=SAT_BANDS.findIndex(function(b){return tgtScore>=b.min&&tgtScore<=b.max;});
   var metrics=[
+    {key:"tier",label:"Tier access"},
     {key:"unis",label:"Universities you qualify for"},
     {key:"scholarshipAmt",label:"Scholarship / year"},
     {key:"avgSalary",label:"Average starting salary"},
@@ -647,7 +656,7 @@ function updateJourney(){
     {key:"countries",label:"Target countries"},
   ];
   var tbl="<thead><tr>";
-  tbl+="<th style='text-align:left;color:rgba(255,255,255,0.45);font-size:10px;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.1);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap'>Metric</th>";
+  tbl+="<th style='text-align:left;color:rgba(255,255,255,0.5);font-size:10px;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.12);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap;background:rgba(255,255,255,0.05);border-right:1px solid rgba(255,255,255,0.08)'>Metric</th>";
   SAT_BANDS.forEach(function(b,i){
     var isCur=(i===curBandIdx);
     var isTgt=(i===tgtBandIdx);
@@ -669,6 +678,7 @@ function updateJourney(){
       var fw=isCur||isTgt?"700":"400";
       var val="";
       if(m.key==="unis"){val=UNIS.filter(function(u){return b.max>=u.satMin;}).length+" unis";}
+      else if(m.key==="tier"){val=b.tier;}
       else if(m.key==="countries"){val=b.countries.slice(0,2).join(", ");}
       else{val=b[m.key]||"--";}
       tbl+="<td style='text-align:center;padding:11px 8px;border-bottom:1px solid rgba(255,255,255,0.06);color:"+color+";font-weight:"+fw+";font-size:12px;background:"+bg+";white-space:nowrap'>"+val+"</td>";
@@ -933,7 +943,7 @@ function init(){
   [1,2,3,4,5].forEach(function(t){document.getElementById("f-tier").innerHTML+='<option value="'+t+'">'+TIER_LABELS[t]+'</option>';});
   var fields=[...new Set(UNIS.flatMap(function(u){return u.fields;}))].sort();
   fields.forEach(function(m){document.getElementById("f-major").innerHTML+='<option value="'+m+'">'+m+'</option>';});
-  buildBands();render();
+  render();
   document.getElementById("unlock-btn").addEventListener("click",unlockResults);
   document.getElementById("reset-btn").addEventListener("click",function(){
     ["f-country","f-tier","f-major","f-satrange"].forEach(function(id){var el=document.getElementById(id);if(el)el.value="";});
