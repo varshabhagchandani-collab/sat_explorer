@@ -173,7 +173,8 @@ tbody td{padding:10px 12px;vertical-align:middle;}
 .ctbl-wrap{background:var(--card);border:1px solid var(--bdr);border-radius:14px;overflow:hidden;}
 
 /* DETAIL PANEL */
-.dpanel{background:var(--card);border:2px solid var(--ls);border-radius:16px;padding:1.5rem;margin-bottom:1rem;}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:500;display:flex;align-items:flex-start;justify-content:center;padding:2rem 1rem;overflow-y:auto;}
+.dpanel{background:var(--card);border:2px solid var(--ls);border-radius:16px;padding:1.5rem;width:100%;max-width:860px;position:relative;margin:auto;}
 .dp-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.25rem;}
 .dp-title{font-size:17px;font-weight:700;color:var(--tx);}
 .dp-sub{font-size:12px;color:var(--mu);margin-top:4px;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;}
@@ -310,12 +311,23 @@ tbody td{padding:10px 12px;vertical-align:middle;}
           <option value="high">Accessible (&gt;50%)</option>
         </select>
       </div>
+      <div class="fi"><label>SAT score range</label>
+        <select id="f-satrange">
+          <option value="">Any score range</option>
+          <option value="900-1099">900-1099 (Tier 4-5)</option>
+          <option value="1100-1199">1100-1199 (Tier 3-4)</option>
+          <option value="1200-1299">1200-1299 (Tier 2-3)</option>
+          <option value="1300-1399">1300-1399 (Tier 1-2)</option>
+          <option value="1400-1499">1400-1499 (Tier 1)</option>
+          <option value="1500-1600">1500-1600 (Tier 1 Elite)</option>
+        </select>
+      </div>
       <div class="fi"><label>Show</label>
         <select id="f-show">
           <option value="all">All universities</option>
-          <option value="current">Current score: qualifies</option>
-          <option value="target">Target score: qualifies</option>
-          <option value="gain">Newly unlocked by training</option>
+          <option value="current">My score qualifies</option>
+          <option value="target">Target score qualifies</option>
+          <option value="gain">Newly unlocked</option>
         </select>
       </div>
       <button class="fbtn" id="reset-btn">&#x21BA; Reset</button>
@@ -368,15 +380,16 @@ tbody td{padding:10px 12px;vertical-align:middle;}
         <div class="twrap">
           <table>
             <thead><tr>
-              <th>University</th>
-              <th>SAT Required</th>
+              <th onclick="sortBy('university')">University <span class="si" id="arr2-university">&#x2195;</span></th>
+              <th onclick="sortBy('satMin')">SAT Required <span class="si" id="arr2-satMin">&#x2195;</span></th>
               <th>Your Score</th>
-              <th>Target Score</th>
-              <th>Gap Now</th>
-              <th>Gap After Training</th>
-              <th>Tuition/yr</th>
-              <th>Top Scholarship</th>
-              <th>Avg Salary</th>
+              <th>Score with Training</th>
+              <th>Gap to qualify (now)</th>
+              <th>Gap to qualify (trained)</th>
+              <th onclick="sortBy('tuitionUSD')">Tuition/yr <span class="si" id="arr2-tuitionUSD">&#x2195;</span></th>
+              <th>Scholarship range</th>
+              <th onclick="sortBy('avgSalary')">Avg Salary <span class="si" id="arr2-avgSalary">&#x2195;</span></th>
+              <th>Top recruiters</th>
             </tr></thead>
             <tbody id="ctbody"></tbody>
           </table>
@@ -668,7 +681,7 @@ function getExtra(n) {
 
 var FLAGS = {USA:"🇺🇸",UK:"🇬🇧",Canada:"🇨🇦",Australia:"🇦🇺",Europe:"🇪🇺",Asia:"🌏","Middle East":"🌍",India:"🇮🇳"};
 var TIER_LABELS = {1:"Tier 1 - Elite",2:"Tier 2 - Strong",3:"Tier 3 - Good",4:"Tier 4 - Accessible",5:"Tier 5 - Open"};
-var TIER_SHORT = {1:"Elite",2:"Strong",3:"Good",4:"Accessible",5:"Open"};
+var TIER_SHORT = {1:"Tier 1",2:"Tier 2",3:"Tier 3",4:"Tier 4",5:"Tier 5"};
 var TIER_CLS = {1:"t1",2:"t2",3:"t3",4:"t4",5:"t5"};
 
 var curScore = NaN, tgtScore = NaN, scoresUnlocked = false;
@@ -680,16 +693,16 @@ function pct(score) { return Math.min(100, Math.round(((score-900)/700)*100)); }
 
 function mTagCur(u) {
   if(isNaN(curScore)||curScore<400) return "";
-  if(curScore>=u.satMin+50) return '<span class="mt mt-m">Match</span>';
-  if(curScore>=u.satMin) return '<span class="mt mt-s">Stretch</span>';
-  return '<span class="mt mt-r">Reach</span>';
+  if(curScore>=u.satMin+50) return '<span class="mt mt-m">Eligible</span>';
+  if(curScore>=u.satMin) return '<span class="mt mt-s">Borderline</span>';
+  return '<span class="mt mt-r">Score too low</span>';
 }
 function mTagTgt(u) {
   if(isNaN(tgtScore)||tgtScore<400) return "";
-  if(tgtScore>=u.satMin+50) return '<span class="mt mt-m">Match</span>';
-  if(tgtScore>=u.satMin) return '<span class="mt mt-s">Stretch</span>';
-  if(tgtScore>=u.satMin-50) return '<span class="mt mt-f">Close</span>';
-  return '<span class="mt mt-r">Reach</span>';
+  if(tgtScore>=u.satMin+50) return '<span class="mt mt-m">Eligible</span>';
+  if(tgtScore>=u.satMin) return '<span class="mt mt-s">Borderline</span>';
+  if(tgtScore>=u.satMin-50) return '<span class="mt mt-f">Almost there</span>';
+  return '<span class="mt mt-r">Score too low</span>';
 }
 
 function getCardClass(u) {
@@ -763,10 +776,9 @@ function updateJourney() {
   var tbl = '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
   tbl += '<thead>';
   tbl += '<tr>';
-  tbl += '<th style="padding:12px 16px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:rgba(255,255,255,0.45);border-bottom:1px solid rgba(255,255,255,0.12);width:30%">Metric</th>';
-  tbl += '<th style="padding:12px 16px;text-align:center;font-size:13px;font-weight:700;color:#f87171;border-bottom:1px solid rgba(255,255,255,0.12);background:rgba(239,68,68,0.1);border-radius:8px 8px 0 0;width:25%">&#128308; Current Score<br><span style="font-size:22px;color:#f87171">'+curScore+'</span></th>';
-  tbl += '<th style="padding:12px 16px;text-align:center;font-size:13px;font-weight:700;color:#818cf8;border-bottom:1px solid rgba(255,255,255,0.12);background:rgba(99,102,241,0.1);border-radius:8px 8px 0 0;width:25%">&#129351; After Training<br><span style="font-size:22px;color:#818cf8">'+tgtScore+'</span></th>';
-  tbl += '<th style="padding:12px 16px;text-align:center;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:rgba(255,255,255,0.45);border-bottom:1px solid rgba(255,255,255,0.12);width:20%">What changes</th>';
+  tbl += '<th style="padding:12px 16px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:rgba(255,255,255,0.45);border-bottom:1px solid rgba(255,255,255,0.12);width:38%">Metric</th>';
+  tbl += '<th style="padding:12px 16px;text-align:center;font-size:13px;font-weight:700;color:#f87171;border-bottom:1px solid rgba(255,255,255,0.12);background:rgba(239,68,68,0.1);width:31%">&#128308; Current Score &mdash; '+curScore+'</th>';
+  tbl += '<th style="padding:12px 16px;text-align:center;font-size:13px;font-weight:700;color:#818cf8;border-bottom:1px solid rgba(255,255,255,0.12);background:rgba(99,102,241,0.1);width:31%">&#127775; With Leap Scholar &mdash; '+tgtScore+'</th>';
   tbl += '</tr>';
   tbl += '</thead><tbody>';
 
@@ -777,18 +789,12 @@ function updateJourney() {
     tbl += '<td style="padding:13px 16px;color:rgba(255,255,255,0.75);font-weight:500;border-bottom:1px solid rgba(255,255,255,0.06)">'+row.metric+'</td>';
     tbl += '<td style="padding:13px 16px;text-align:center;color:'+(isScore?'#f87171':'rgba(255,255,255,0.6)')+';font-weight:'+(isScore?'700':'500')+';border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(239,68,68,0.05)">'+row.cur+'</td>';
     tbl += '<td style="padding:13px 16px;text-align:center;color:'+(isScore?'#818cf8':'#86efac')+';font-weight:700;border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(99,102,241,0.05)">'+row.tgt+'</td>';
-    tbl += '<td style="padding:13px 16px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.06)">';
-    if(row.gain) {
-      tbl += '<span style="background:rgba(134,239,172,0.15);color:#86efac;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;white-space:nowrap">'+row.gain+'</span>';
-    }
-    tbl += '</td>';
+
     tbl += '</tr>';
   });
 
   tbl += '</tbody></table>';
-  tbl += '<div style="margin-top:1rem;padding:0.875rem 1rem;background:rgba(134,239,172,0.1);border:1px solid rgba(134,239,172,0.25);border-radius:10px;font-size:13px;color:rgba(255,255,255,0.8);line-height:1.6">';
-  tbl += '&#128161; <strong style="color:#86efac">Bottom line for parents:</strong> Going from '+curScore+' to '+tgtScore+' with Leap Scholar training unlocks <strong style="color:#86efac">'+newUnis+' more universities</strong>, upgrades scholarship eligibility from <strong style="color:#f87171">'+curBand.scholarshipAmt+'</strong> to <strong style="color:#86efac">'+tgtBand.scholarshipAmt+'</strong> per year, and increases average starting salary from <strong style="color:#f87171">'+curBand.avgSalary+'</strong> to <strong style="color:#86efac">'+tgtBand.avgSalary+'</strong>.';
-  tbl += '</div>';
+
 
   document.getElementById("compare-table-wrap").innerHTML = tbl;
 }
@@ -855,6 +861,7 @@ function getFiltered() {
   var major = document.getElementById("f-major").value;
   var acc = document.getElementById("f-acc").value;
   var show = document.getElementById("f-show").value;
+  var satrange = document.getElementById("f-satrange") ? document.getElementById("f-satrange").value : "";
   return UNIS.filter(function(u) {
     if(country && u.country!==country) return false;
     if(tier && u.tier!==parseInt(tier)) return false;
@@ -869,6 +876,11 @@ function getFiltered() {
       var cq = !isNaN(curScore)&&curScore>=u.satMin;
       var tq = !isNaN(tgtScore)&&tgtScore>=u.satMin;
       if(!tq||cq) return false;
+    }
+    if(satrange) {
+      var parts = satrange.split("-");
+      var lo = parseInt(parts[0]), hi = parseInt(parts[1]);
+      if(u.satMin < lo || u.satMin > hi) return false;
     }
     return true;
   });
@@ -980,14 +992,14 @@ function openDP(name) {
   var ex = getExtra(name);
   var curQ = !isNaN(curScore)&&curScore>=u.satMin;
   var tgtQ = !isNaN(tgtScore)&&tgtScore>=u.satMin;
-  var statusTag = curQ ? '<span class="mt mt-m">Current score qualifies</span>' : tgtQ ? '<span class="mt mt-f">Target score qualifies</span>' : '<span class="mt mt-r">Need higher score</span>';
+  var statusTag = curQ ? '<span class="mt mt-m">Current score qualifies</span>' : tgtQ ? '<span class="mt mt-f">Target score qualifies</span>' : '<span class="mt mt-r">Score too low</span>';
   var satNote = curQ ? "You already qualify!" : (!isNaN(curScore) ? "Need "+(u.satMin-curScore)+" more points with Leap Scholar training" : "Enter your score above");
   var tgtNote = tgtQ ? "Will qualify after training!" : (!isNaN(tgtScore) ? "Still need "+(u.satMin-tgtScore)+" more points" : "Enter target above");
   var html = '<div class="dpanel">';
   html += '<div class="dp-hdr">';
   html += '<div><div class="dp-title">'+(FLAGS[u.country]||"")+" "+u.university+'</div>';
   html += '<div class="dp-sub"><span class="tb '+TIER_CLS[u.tier]+'" style="display:inline-flex"><span class="td"></span>'+TIER_SHORT[u.tier]+'</span><span>'+u.state+'</span><span>&middot;</span><span>Rank #'+u.rank+'</span>'+statusTag+'</div></div>';
-  html += '<button class="dp-close" onclick="document.getElementById(&apos;dpanel-wrap&apos;).remove()">&#10005; Close</button>';
+  html += '<button class="dp-close" onclick="var el=document.getElementById(&apos;dpanel-wrap&apos;);if(el)el.remove();document.body.style.overflow=&apos;&apos;">&#10005; Close</button>';
   html += '</div>';
   html += '<div class="dp-tabs">';
   html += '<button class="dp-tab active" onclick="swTab(this,&apos;t-ov&apos;)">Overview</button>';
@@ -1056,11 +1068,14 @@ function openDP(name) {
   (ex.topRecruiters||[]).forEach(function(r){ html += '<span class="chip">'+r+'</span>'; });
   html += '</div></div>';
   html += '</div>'; // close dpanel
-  var wrap = document.createElement("div");
-  wrap.id = "dpanel-wrap";
-  wrap.innerHTML = html;
-  document.querySelector(".wrap").appendChild(wrap);
-  wrap.scrollIntoView({behavior:"smooth",block:"start"});
+  var overlay = document.createElement("div");
+  overlay.id = "dpanel-wrap";
+  overlay.className = "modal-overlay";
+  overlay.innerHTML = html;
+  overlay.addEventListener("click", function(e){ if(e.target===overlay) overlay.remove(); });
+  document.body.appendChild(overlay);
+  overlay.scrollTop = 0;
+  document.body.style.overflow = "hidden";
 }
 
 function swTab(btn, id) {
@@ -1088,7 +1103,7 @@ function sortBy(col) {
 }
 
 function resetFilters() {
-  ["f-country","f-tier","f-major","f-acc","f-show"].forEach(function(id){ document.getElementById(id).value=""; });
+  ["f-country","f-tier","f-major","f-acc","f-show","f-satrange"].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=""; });
   render();
 }
 
