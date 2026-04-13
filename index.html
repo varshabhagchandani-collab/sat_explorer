@@ -252,6 +252,7 @@ tbody td{padding:10px 12px;vertical-align:middle;}
 
   <div class="filters-bar section-gap">
     <div class="filters-inner">
+      <div class="fi" style="min-width:180px"><label>Search university</label><div style="position:relative"><input type="text" id="f-search" placeholder="e.g. Harvard, NUS..." style="width:100%;padding:8px 10px 8px 30px;font-size:13px;font-family:DM Sans,sans-serif;border:1.5px solid var(--bdr);border-radius:9px;background:#f9fafb;color:var(--tx);" oninput="render()"><span style="position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--su);font-size:13px">🔍</span></div></div>
       <div class="fi"><label>Country</label><select id="f-country"><option value="">All countries</option></select></div>
       <div class="fi"><label>Tier</label><select id="f-tier"><option value="">All tiers</option></select></div>
       <div class="fi"><label>Field</label><select id="f-major"><option value="">All fields</option></select></div>
@@ -461,17 +462,6 @@ const UNIS=[
   {university:"Cairo University",country:"Middle East",state:"Egypt",tier:3,satMin:980,satMax:1200,acceptance:65,rank:600,fields:["Medicine","Engineering","Law"]},
   {university:"Sultan Qaboos University",country:"Middle East",state:"Oman",tier:3,satMin:1000,satMax:1220,acceptance:58,rank:560,fields:["Medicine","Engineering","Agriculture"]},
   {university:"German University of Technology Oman",country:"Middle East",state:"Oman",tier:3,satMin:1020,satMax:1240,acceptance:66,rank:600,fields:["Engineering","IT","Business"]},
-  {university:"Indian Institute of Technology Bombay",country:"India",state:"Maharashtra",tier:1,satMin:1480,satMax:1580,acceptance:2,rank:118,fields:["Engineering","CS","Design"]},
-  {university:"Indian Institute of Technology Delhi",country:"India",state:"Delhi",tier:1,satMin:1470,satMax:1570,acceptance:2,rank:150,fields:["Engineering","CS","Technology"]},
-  {university:"Indian Institute of Technology Madras",country:"India",state:"Tamil Nadu",tier:1,satMin:1460,satMax:1570,acceptance:2,rank:227,fields:["Engineering","CS","Research"]},
-  {university:"Indian Institute of Technology Kanpur",country:"India",state:"Uttar Pradesh",tier:1,satMin:1450,satMax:1560,acceptance:3,rank:278,fields:["Engineering","Science","Management"]},
-  {university:"Indian Institute of Technology Kharagpur",country:"India",state:"West Bengal",tier:1,satMin:1440,satMax:1550,acceptance:3,rank:280,fields:["Engineering","Architecture","Law"]},
-  {university:"Indian Institute of Technology Roorkee",country:"India",state:"Uttarakhand",tier:1,satMin:1430,satMax:1540,acceptance:4,rank:369,fields:["Engineering","Architecture","Science"]},
-  {university:"Indian Institute of Technology Hyderabad",country:"India",state:"Telangana",tier:1,satMin:1420,satMax:1530,acceptance:4,rank:400,fields:["Engineering","CS","Design"]},
-  {university:"Indian Institute of Technology Guwahati",country:"India",state:"Assam",tier:1,satMin:1420,satMax:1530,acceptance:4,rank:420,fields:["Engineering","Science","Humanities"]},
-  {university:"Indian Institute of Science",country:"India",state:"Karnataka",tier:1,satMin:1460,satMax:1570,acceptance:3,rank:155,fields:["Research","Science","Engineering"]},
-  {university:"Indian Institute of Technology BHU",country:"India",state:"Uttar Pradesh",tier:2,satMin:1380,satMax:1500,acceptance:5,rank:500,fields:["Engineering","Science","Management"]},
-  {university:"Indian Institute of Technology Indore",country:"India",state:"Madhya Pradesh",tier:2,satMin:1370,satMax:1490,acceptance:5,rank:520,fields:["Engineering","CS","Science"]},
   {university:"Birla Institute of Technology & Science Pilani",country:"India",state:"Rajasthan",tier:2,satMin:1350,satMax:1490,acceptance:8,rank:551,fields:["Engineering","Pharmacy","Management"]},
   {university:"BITS Pilani – Goa Campus",country:"India",state:"Goa",tier:2,satMin:1340,satMax:1480,acceptance:9,rank:570,fields:["Engineering","CS","Business"]},
   {university:"BITS Pilani – Hyderabad Campus",country:"India",state:"Telangana",tier:2,satMin:1330,satMax:1470,acceptance:9,rank:580,fields:["Engineering","CS","Pharmacy"]},
@@ -481,7 +471,6 @@ const UNIS=[
   {university:"Ashoka University",country:"India",state:"Haryana",tier:2,satMin:1280,satMax:1460,acceptance:18,rank:650,fields:["Liberal Arts","Economics","Psychology"]},
   {university:"OP Jindal Global University",country:"India",state:"Haryana",tier:2,satMin:1200,satMax:1400,acceptance:25,rank:700,fields:["Law","Business","International Affairs"]},
   {university:"Shiv Nadar University",country:"India",state:"Uttar Pradesh",tier:2,satMin:1200,satMax:1390,acceptance:28,rank:720,fields:["Engineering","CS","Arts"]},
-  {university:"Indian Institute of Technology Ropar",country:"India",state:"Punjab",tier:2,satMin:1380,satMax:1500,acceptance:5,rank:510,fields:["Engineering","CS","Science"]},
   {university:"SRM Institute of Science & Technology",country:"India",state:"Tamil Nadu",tier:3,satMin:1050,satMax:1280,acceptance:55,rank:801,fields:["Engineering","Medicine","Business"]},
   {university:"Amity University",country:"India",state:"Uttar Pradesh",tier:3,satMin:1000,satMax:1230,acceptance:65,rank:900,fields:["Engineering","Business","Law"]},
   {university:"Christ University",country:"India",state:"Karnataka",tier:3,satMin:1050,satMax:1260,acceptance:55,rank:850,fields:["Business","Law","Arts"]},
@@ -492,6 +481,7 @@ const UNIS=[
   {university:"Chandigarh University",country:"India",state:"Punjab",tier:3,satMin:1020,satMax:1230,acceptance:65,rank:900,fields:["Engineering","Business","Law"]},
   {university:"Kalinga Institute of Industrial Technology",country:"India",state:"Odisha",tier:3,satMin:1050,satMax:1260,acceptance:58,rank:850,fields:["Engineering","Medicine","Management"]},
   {university:"PSG College of Technology",country:"India",state:"Tamil Nadu",tier:3,satMin:1100,satMax:1300,acceptance:50,rank:800,fields:["Engineering","CS","Design"]},
+  {university:"IIIT Hyderabad (DASA – Foreign/NRI)",country:"India",state:"Telangana",tier:2,satMin:1070,satMax:1400,acceptance:15,rank:801,fields:["CS","Engineering","Electronics"]},
   {university:"Jadavpur University",country:"India",state:"West Bengal",tier:2,satMin:1250,satMax:1420,acceptance:20,rank:680,fields:["Engineering","Science","Arts"]},
   {university:"Anna University",country:"India",state:"Tamil Nadu",tier:2,satMin:1220,satMax:1400,acceptance:25,rank:700,fields:["Engineering","Technology","Architecture"]},
   {university:"University of Hyderabad",country:"India",state:"Telangana",tier:2,satMin:1200,satMax:1380,acceptance:22,rank:720,fields:["Sciences","Humanities","Social Sciences"]},
@@ -510,7 +500,7 @@ const EXTRA = {
   "University of Melbourne":{tuitionUSD:38000,living:15000,scholarships:["Melbourne International Undergraduate Scholarship","Graduate Research Scholarship","Equity Scholarship"],boardReq:{cbse:"88%+",ib:"34+",ap:"3+ in relevant"},minGPA:3.6,extraReqs:["Personal statement","References","Co-curricular activities"],profiles:[{name:"Pooja L.",board:"CBSE",score:"91.6%",sat:1360,ec:"Melbourne Scholar, Sports captain, Community service"},{name:"Vikram M.",board:"IB",score:"36/45",sat:1340,ec:"Entrepreneurship club, Debate team"}],avgSalary:55000,topRecruiters:["Deloitte","PwC","ANZ","BHP","Commonwealth Bank"],placementRate:89},
   "National University of Singapore":{tuitionUSD:28000,living:10000,scholarships:["ASEAN Undergraduate Scholarship (full ride)","Science & Technology Scholarship","NUS Merit Scholarship"],boardReq:{cbse:"92%+",ib:"38+",ap:"4+ in relevant"},minGPA:3.75,extraReqs:["Aptitude test","Interview","Leadership track record"],profiles:[{name:"Deepak R.",board:"CBSE",score:"95.2%",sat:1430,ec:"ASEAN Scholar, Robotics olympiad, Sports"},{name:"Preethi K.",board:"IB",score:"39/45",sat:1410,ec:"Student council president, Published research"}],avgSalary:60000,topRecruiters:["DBS","Google","Grab","Goldman Sachs","Shopee"],placementRate:95},
   "New York University Abu Dhabi":{tuitionUSD:0,living:0,scholarships:["Full scholarship (100% admitted students get aid)","Sheikh Khalifa Excellence Award"],boardReq:{cbse:"90%+",ib:"36+",ap:"4+ in relevant"},minGPA:3.7,extraReqs:["Global citizenship essay","Interview","Leadership & community"],profiles:[{name:"Aisha M.",board:"CBSE",score:"93.4%",sat:1410,ec:"Full ride, Social entrepreneur, MUN"},{name:"Omar K.",board:"IB",score:"37/45",sat:1390,ec:"Research publication, Community leader"}],avgSalary:55000,topRecruiters:["Goldman Sachs UAE","McKinsey ME","Google Dubai","UAE Government","ADNOC"],placementRate:92},
-  "Indian Institute of Technology Bombay":{tuitionUSD:3000,living:3000,scholarships:["IITB Merit Scholarship","MCM Scholarship","Institute Free Studentship"],boardReq:{cbse:"75%+",ib:"32+",jee:"JEE Advanced rank required"},minGPA:3.5,extraReqs:["JEE Advanced qualification","SAT considered for international quota"],profiles:[{name:"Kartik S.",board:"CBSE",score:"96.8%",sat:1490,ec:"JEE AIR 45, Competitive programming, Research"},{name:"Ananya P.",board:"CBSE",score:"95.4%",sat:1470,ec:"Olympiad medals, Science club president"}],avgSalary:45000,topRecruiters:["Google","Microsoft","Goldman Sachs","Tower Research","Uber"],placementRate:97},
+
   "Ashoka University":{tuitionUSD:12000,living:5000,scholarships:["Ashoka Scholar Award (up to 100%)","Young India Fellowship","Deans Award"],boardReq:{cbse:"85%+",ib:"32+",ap:"3+ relevant"},minGPA:3.5,extraReqs:["Personal essays","Interview","Leadership activities"],profiles:[{name:"Riya M.",board:"CBSE",score:"94.2%",sat:1320,ec:"Ashoka Scholar, Model UN, Social enterprise"},{name:"Shaan K.",board:"IB",score:"35/45",sat:1300,ec:"Debate champion, NGO founder"}],avgSalary:30000,topRecruiters:["Bain","EY","Times Group","Policy roles","Teach for India"],placementRate:85},
 };
 
@@ -569,69 +559,226 @@ const SAT_BANDS = [
 // Country ranking data & local tiers
 // Source: QS World Rankings 2024, NIRF 2024 (India), Times Higher Education
 var COUNTRY_RANKS = {
-  // India - NIRF 2024
-  "Indian Institute of Technology Bombay": {countryRank:3, countryTier:"Tier 1 India", country:"India"},
-  "Indian Institute of Technology Delhi": {countryRank:4, countryTier:"Tier 1 India", country:"India"},
-  "Indian Institute of Technology Madras": {countryRank:1, countryTier:"Tier 1 India", country:"India"},
-  "Indian Institute of Technology Kanpur": {countryRank:5, countryTier:"Tier 1 India", country:"India"},
-  "Indian Institute of Technology Kharagpur": {countryRank:6, countryTier:"Tier 1 India", country:"India"},
-  "Indian Institute of Technology Roorkee": {countryRank:7, countryTier:"Tier 1 India", country:"India"},
-  "Indian Institute of Technology Hyderabad": {countryRank:10, countryTier:"Tier 1 India", country:"India"},
-  "Indian Institute of Technology Guwahati": {countryRank:9, countryTier:"Tier 1 India", country:"India"},
-  "Indian Institute of Science": {countryRank:2, countryTier:"Tier 1 India", country:"India"},
-  "Birla Institute of Technology & Science Pilani": {countryRank:21, countryTier:"Tier 2 India", country:"India"},
-  "BITS Pilani – Goa Campus": {countryRank:25, countryTier:"Tier 2 India", country:"India"},
-  "BITS Pilani – Hyderabad Campus": {countryRank:26, countryTier:"Tier 2 India", country:"India"},
-  "Vellore Institute of Technology": {countryRank:11, countryTier:"Tier 2 India", country:"India"},
-  "Manipal Academy of Higher Education": {countryRank:14, countryTier:"Tier 2 India", country:"India"},
-  "Ashoka University": {countryRank:40, countryTier:"Tier 2 India", country:"India"},
-  "OP Jindal Global University": {countryRank:45, countryTier:"Tier 2 India", country:"India"},
-  "Jadavpur University": {countryRank:12, countryTier:"Tier 2 India", country:"India"},
-  "Chandigarh University": {countryRank:28, countryTier:"Tier 3 India", country:"India"},
-  "Amity University": {countryRank:50, countryTier:"Tier 3 India", country:"India"},
-  "Lovely Professional University": {countryRank:80, countryTier:"Tier 4 India", country:"India"},
-  // UAE
-  "New York University Abu Dhabi": {countryRank:1, countryTier:"Tier 1 UAE", country:"UAE"},
-  "Khalifa University": {countryRank:2, countryTier:"Tier 1 UAE", country:"UAE"},
-  "American University of Sharjah": {countryRank:3, countryTier:"Tier 1 UAE", country:"UAE"},
-  "American University of Dubai": {countryRank:4, countryTier:"Tier 2 UAE", country:"UAE"},
-  "Heriot-Watt University Dubai": {countryRank:5, countryTier:"Tier 2 UAE", country:"UAE"},
-  "Rochester Institute of Technology Dubai": {countryRank:6, countryTier:"Tier 2 UAE", country:"UAE"},
-  // UK - Guardian 2024
-  "University of Oxford": {countryRank:1, countryTier:"Tier 1 UK", country:"UK"},
-  "University of Cambridge": {countryRank:2, countryTier:"Tier 1 UK", country:"UK"},
-  "Imperial College London": {countryRank:3, countryTier:"Tier 1 UK", country:"UK"},
-  "London School of Economics": {countryRank:4, countryTier:"Tier 1 UK", country:"UK"},
-  "University College London": {countryRank:5, countryTier:"Tier 1 UK", country:"UK"},
-  "King's College London": {countryRank:6, countryTier:"Tier 1 UK", country:"UK"},
-  "University of Edinburgh": {countryRank:7, countryTier:"Tier 1 UK", country:"UK"},
-  "University of Manchester": {countryRank:8, countryTier:"Tier 1 UK", country:"UK"},
-  "University of Bristol": {countryRank:9, countryTier:"Tier 1 UK", country:"UK"},
-  "Durham University": {countryRank:10, countryTier:"Tier 1 UK", country:"UK"},
-  "University of Glasgow": {countryRank:11, countryTier:"Tier 2 UK", country:"UK"},
-  "University of Exeter": {countryRank:12, countryTier:"Tier 2 UK", country:"UK"},
-  "University of Leeds": {countryRank:15, countryTier:"Tier 2 UK", country:"UK"},
-  "University of Nottingham": {countryRank:16, countryTier:"Tier 2 UK", country:"UK"},
-  "University of Birmingham": {countryRank:14, countryTier:"Tier 2 UK", country:"UK"},
-  "University of Southampton": {countryRank:18, countryTier:"Tier 2 UK", country:"UK"},
-  // Canada
-  "University of Toronto": {countryRank:1, countryTier:"Tier 1 Canada", country:"Canada"},
-  "University of British Columbia": {countryRank:2, countryTier:"Tier 1 Canada", country:"Canada"},
-  "McGill University": {countryRank:3, countryTier:"Tier 1 Canada", country:"Canada"},
-  "University of Waterloo": {countryRank:4, countryTier:"Tier 1 Canada", country:"Canada"},
-  "McMaster University": {countryRank:5, countryTier:"Tier 1 Canada", country:"Canada"},
-  "University of Alberta": {countryRank:6, countryTier:"Tier 2 Canada", country:"Canada"},
-  // Australia
-  "University of Melbourne": {countryRank:1, countryTier:"Tier 1 Australia", country:"Australia"},
-  "University of Sydney": {countryRank:2, countryTier:"Tier 1 Australia", country:"Australia"},
-  "Australian National University": {countryRank:3, countryTier:"Tier 1 Australia", country:"Australia"},
-  "University of New South Wales": {countryRank:4, countryTier:"Tier 1 Australia", country:"Australia"},
-  "University of Queensland": {countryRank:5, countryTier:"Tier 1 Australia", country:"Australia"},
-  "Monash University": {countryRank:6, countryTier:"Tier 1 Australia", country:"Australia"},
-  // Singapore
-  "National University of Singapore": {countryRank:1, countryTier:"Tier 1 Singapore", country:"Singapore"},
-  "Nanyang Technological University": {countryRank:2, countryTier:"Tier 1 Singapore", country:"Singapore"},
+  // ── INDIA (NIRF 2024 + QS India 2024) ──────────────────────────────────
+  "Birla Institute of Technology & Science Pilani":  {countryRank:21, countryTier:"Tier 2 India", country:"India"},
+  "BITS Pilani – Goa Campus":                        {countryRank:25, countryTier:"Tier 2 India", country:"India"},
+  "BITS Pilani – Hyderabad Campus":                  {countryRank:26, countryTier:"Tier 2 India", country:"India"},
+  "Vellore Institute of Technology":                  {countryRank:11, countryTier:"Tier 2 India", country:"India"},
+  "Manipal Academy of Higher Education":              {countryRank:14, countryTier:"Tier 2 India", country:"India"},
+  "Delhi University – St. Stephen's College":         {countryRank:12, countryTier:"Tier 2 India", country:"India"},
+  "Ashoka University":                                {countryRank:40, countryTier:"Tier 2 India", country:"India"},
+  "OP Jindal Global University":                      {countryRank:47, countryTier:"Tier 3 India", country:"India"},
+  "Shiv Nadar University":                            {countryRank:30, countryTier:"Tier 3 India", country:"India"},
+  "SRM Institute of Science & Technology":            {countryRank:10, countryTier:"Tier 2 India", country:"India"},
+  "Amity University":                                 {countryRank:55, countryTier:"Tier 3 India", country:"India"},
+  "Christ University":                                {countryRank:60, countryTier:"Tier 3 India", country:"India"},
+  "FLAME University":                                 {countryRank:80, countryTier:"Tier 3 India", country:"India"},
+  "Symbiosis International University":               {countryRank:42, countryTier:"Tier 3 India", country:"India"},
+  "Thapar Institute of Engineering & Technology":     {countryRank:22, countryTier:"Tier 2 India", country:"India"},
+  "Lovely Professional University":                   {countryRank:95, countryTier:"Tier 4 India", country:"India"},
+  "Chandigarh University":                            {countryRank:28, countryTier:"Tier 3 India", country:"India"},
+  "Kalinga Institute of Industrial Technology":       {countryRank:18, countryTier:"Tier 2 India", country:"India"},
+  "PSG College of Technology":                        {countryRank:35, countryTier:"Tier 3 India", country:"India"},
+  "IIIT Hyderabad (DASA – Foreign/NRI)":              {countryRank:8,  countryTier:"Tier 1 India (IIIT)", country:"India"},
+  "Jadavpur University":                              {countryRank:12, countryTier:"Tier 2 India", country:"India"},
+  "Anna University":                                  {countryRank:7,  countryTier:"Tier 2 India", country:"India"},
+  "University of Hyderabad":                          {countryRank:16, countryTier:"Tier 2 India", country:"India"},
+  "Hyderabad Institute of Technology & Management":   {countryRank:150,countryTier:"Tier 4 India", country:"India"},
+  "Bennett University":                               {countryRank:88, countryTier:"Tier 3 India", country:"India"},
+  "Plaksha University":                               {countryRank:45, countryTier:"Tier 3 India", country:"India"},
+  "Krea University":                                  {countryRank:50, countryTier:"Tier 3 India", country:"India"},
+
+  // ── UAE (QS Arab Region 2024) ──────────────────────────────────────────
+  "New York University Abu Dhabi":                    {countryRank:1,  countryTier:"Tier 1 UAE", country:"UAE"},
+  "Khalifa University":                               {countryRank:2,  countryTier:"Tier 1 UAE", country:"UAE"},
+  "American University of Sharjah":                   {countryRank:3,  countryTier:"Tier 1 UAE", country:"UAE"},
+  "American University of Dubai":                     {countryRank:5,  countryTier:"Tier 2 UAE", country:"UAE"},
+  "University of Dubai":                              {countryRank:8,  countryTier:"Tier 2 UAE", country:"UAE"},
+  "Abu Dhabi University":                             {countryRank:7,  countryTier:"Tier 2 UAE", country:"UAE"},
+  "Ajman University":                                 {countryRank:10, countryTier:"Tier 3 UAE", country:"UAE"},
+  "Manipal University Dubai":                         {countryRank:12, countryTier:"Tier 3 UAE", country:"UAE"},
+  "Heriot-Watt University Dubai":                     {countryRank:4,  countryTier:"Tier 2 UAE", country:"UAE"},
+  "Middlesex University Dubai":                       {countryRank:11, countryTier:"Tier 3 UAE", country:"UAE"},
+  "University of Wollongong Dubai":                   {countryRank:6,  countryTier:"Tier 2 UAE", country:"UAE"},
+  "Murdoch University Dubai":                         {countryRank:13, countryTier:"Tier 3 UAE", country:"UAE"},
+  "Rochester Institute of Technology Dubai":          {countryRank:9,  countryTier:"Tier 2 UAE", country:"UAE"},
+  "Paris-Sorbonne University Abu Dhabi":              {countryRank:14, countryTier:"Tier 3 UAE", country:"UAE"},
+
+  // ── SAUDI ARABIA (QS Arab Region 2024) ────────────────────────────────
+  "King Abdulaziz University":                        {countryRank:2,  countryTier:"Tier 1 Saudi", country:"Saudi Arabia"},
+  "King Fahd University of Petroleum & Minerals":     {countryRank:3,  countryTier:"Tier 1 Saudi", country:"Saudi Arabia"},
+  "King Saud University":                             {countryRank:1,  countryTier:"Tier 1 Saudi", country:"Saudi Arabia"},
+  "King Abdullah University of Science & Technology": {countryRank:4,  countryTier:"Tier 1 Saudi", country:"Saudi Arabia"},
+  "Alfaisal University":                              {countryRank:8,  countryTier:"Tier 2 Saudi", country:"Saudi Arabia"},
+  "Prince Sultan University":                         {countryRank:10, countryTier:"Tier 2 Saudi", country:"Saudi Arabia"},
+  "Effat University":                                 {countryRank:15, countryTier:"Tier 3 Saudi", country:"Saudi Arabia"},
+
+  // ── QATAR (QS Arab Region 2024) ───────────────────────────────────────
+  "Qatar University":                                 {countryRank:1,  countryTier:"Tier 1 Qatar", country:"Qatar"},
+  "Texas A&M University Qatar":                       {countryRank:2,  countryTier:"Tier 1 Qatar", country:"Qatar"},
+  "Carnegie Mellon University Qatar":                 {countryRank:3,  countryTier:"Tier 1 Qatar", country:"Qatar"},
+  "Georgetown University Qatar":                      {countryRank:4,  countryTier:"Tier 1 Qatar", country:"Qatar"},
+  "Northwestern University Qatar":                    {countryRank:5,  countryTier:"Tier 1 Qatar", country:"Qatar"},
+  "Weill Cornell Medicine Qatar":                     {countryRank:6,  countryTier:"Tier 1 Qatar", country:"Qatar"},
+  "VCU Arts Qatar":                                   {countryRank:7,  countryTier:"Tier 2 Qatar", country:"Qatar"},
+
+  // ── BAHRAIN ────────────────────────────────────────────────────────────
+  "University of Bahrain":                            {countryRank:1,  countryTier:"Tier 1 Bahrain", country:"Bahrain"},
+  "Royal University for Women Bahrain":               {countryRank:3,  countryTier:"Tier 2 Bahrain", country:"Bahrain"},
+  "American University of Bahrain":                   {countryRank:2,  countryTier:"Tier 1 Bahrain", country:"Bahrain"},
+
+  // ── KUWAIT ─────────────────────────────────────────────────────────────
+  "Kuwait University":                                {countryRank:1,  countryTier:"Tier 1 Kuwait", country:"Kuwait"},
+  "Gulf University for Science & Technology":         {countryRank:2,  countryTier:"Tier 2 Kuwait", country:"Kuwait"},
+  "American University of Kuwait":                    {countryRank:3,  countryTier:"Tier 2 Kuwait", country:"Kuwait"},
+
+  // ── JORDAN ─────────────────────────────────────────────────────────────
+  "University of Jordan":                             {countryRank:1,  countryTier:"Tier 1 Jordan", country:"Jordan"},
+  "Jordan University of Science & Technology":        {countryRank:2,  countryTier:"Tier 1 Jordan", country:"Jordan"},
+
+  // ── LEBANON ────────────────────────────────────────────────────────────
+  "American University of Beirut":                    {countryRank:1,  countryTier:"Tier 1 Lebanon", country:"Lebanon"},
+  "Lebanese American University":                     {countryRank:2,  countryTier:"Tier 2 Lebanon", country:"Lebanon"},
+
+  // ── EGYPT ──────────────────────────────────────────────────────────────
+  "American University in Cairo":                     {countryRank:1,  countryTier:"Tier 1 Egypt", country:"Egypt"},
+  "Cairo University":                                 {countryRank:2,  countryTier:"Tier 1 Egypt", country:"Egypt"},
+
+  // ── OMAN ───────────────────────────────────────────────────────────────
+  "Sultan Qaboos University":                         {countryRank:1,  countryTier:"Tier 1 Oman", country:"Oman"},
+  "German University of Technology Oman":             {countryRank:2,  countryTier:"Tier 2 Oman", country:"Oman"},
+
+  // ── UK (Guardian University Guide 2024 + THE) ─────────────────────────
+  "University of Oxford":                             {countryRank:1,  countryTier:"Tier 1 UK", country:"UK"},
+  "University of Cambridge":                          {countryRank:2,  countryTier:"Tier 1 UK", country:"UK"},
+  "Imperial College London":                          {countryRank:3,  countryTier:"Tier 1 UK", country:"UK"},
+  "London School of Economics":                       {countryRank:4,  countryTier:"Tier 1 UK", country:"UK"},
+  "University College London":                        {countryRank:5,  countryTier:"Tier 1 UK", country:"UK"},
+  "King's College London":                            {countryRank:6,  countryTier:"Tier 1 UK", country:"UK"},
+  "University of Edinburgh":                          {countryRank:7,  countryTier:"Tier 1 UK", country:"UK"},
+  "University of Manchester":                         {countryRank:8,  countryTier:"Tier 1 UK", country:"UK"},
+  "University of Bristol":                            {countryRank:9,  countryTier:"Tier 1 UK", country:"UK"},
+  "Durham University":                                {countryRank:10, countryTier:"Tier 1 UK", country:"UK"},
+  "University of Glasgow":                            {countryRank:11, countryTier:"Tier 2 UK", country:"UK"},
+  "University of Exeter":                             {countryRank:12, countryTier:"Tier 2 UK", country:"UK"},
+  "University of Birmingham":                         {countryRank:14, countryTier:"Tier 2 UK", country:"UK"},
+  "University of Leeds":                              {countryRank:15, countryTier:"Tier 2 UK", country:"UK"},
+  "University of Nottingham":                         {countryRank:16, countryTier:"Tier 2 UK", country:"UK"},
+  "University of Southampton":                        {countryRank:18, countryTier:"Tier 2 UK", country:"UK"},
+
+  // ── CANADA (Maclean's University Rankings 2024) ───────────────────────
+  "University of Toronto":                            {countryRank:1,  countryTier:"Tier 1 Canada", country:"Canada"},
+  "University of British Columbia":                   {countryRank:2,  countryTier:"Tier 1 Canada", country:"Canada"},
+  "McGill University":                                {countryRank:3,  countryTier:"Tier 1 Canada", country:"Canada"},
+  "University of Waterloo":                           {countryRank:4,  countryTier:"Tier 1 Canada", country:"Canada"},
+  "McMaster University":                              {countryRank:5,  countryTier:"Tier 1 Canada", country:"Canada"},
+  "University of Alberta":                            {countryRank:6,  countryTier:"Tier 2 Canada", country:"Canada"},
+  "Simon Fraser University":                          {countryRank:7,  countryTier:"Tier 2 Canada", country:"Canada"},
+  "Dalhousie University":                             {countryRank:8,  countryTier:"Tier 2 Canada", country:"Canada"},
+  "University of Ottawa":                             {countryRank:9,  countryTier:"Tier 2 Canada", country:"Canada"},
+  "Carleton University":                              {countryRank:12, countryTier:"Tier 3 Canada", country:"Canada"},
+  "University of New Brunswick":                      {countryRank:15, countryTier:"Tier 3 Canada", country:"Canada"},
+
+  // ── AUSTRALIA (Good Universities Guide 2024) ──────────────────────────
+  "University of Melbourne":                          {countryRank:1,  countryTier:"Tier 1 Australia", country:"Australia"},
+  "University of Sydney":                             {countryRank:2,  countryTier:"Tier 1 Australia", country:"Australia"},
+  "Australian National University":                   {countryRank:3,  countryTier:"Tier 1 Australia", country:"Australia"},
+  "University of New South Wales":                    {countryRank:4,  countryTier:"Tier 1 Australia", country:"Australia"},
+  "University of Queensland":                         {countryRank:5,  countryTier:"Tier 1 Australia", country:"Australia"},
+  "Monash University":                                {countryRank:6,  countryTier:"Tier 1 Australia", country:"Australia"},
+  "University of Adelaide":                           {countryRank:7,  countryTier:"Tier 2 Australia", country:"Australia"},
+  "University of Technology Sydney":                  {countryRank:8,  countryTier:"Tier 2 Australia", country:"Australia"},
+  "RMIT University":                                  {countryRank:9,  countryTier:"Tier 2 Australia", country:"Australia"},
+  "Curtin University":                                {countryRank:10, countryTier:"Tier 2 Australia", country:"Australia"},
+
+  // ── EUROPE (QS Europe Rankings 2024) ─────────────────────────────────
+  "ETH Zurich":                                       {countryRank:1,  countryTier:"Tier 1 Switzerland", country:"Switzerland"},
+  "TU Munich":                                        {countryRank:1,  countryTier:"Tier 1 Germany", country:"Germany"},
+  "University of Amsterdam":                          {countryRank:1,  countryTier:"Tier 1 Netherlands", country:"Netherlands"},
+  "KU Leuven":                                        {countryRank:1,  countryTier:"Tier 1 Belgium", country:"Belgium"},
+  "University of Copenhagen":                         {countryRank:1,  countryTier:"Tier 1 Denmark", country:"Denmark"},
+  "University of Helsinki":                           {countryRank:1,  countryTier:"Tier 1 Finland", country:"Finland"},
+  "Maastricht University":                            {countryRank:4,  countryTier:"Tier 2 Netherlands", country:"Netherlands"},
+  "Groningen University":                             {countryRank:5,  countryTier:"Tier 2 Netherlands", country:"Netherlands"},
+
+  // ── ASIA: SINGAPORE (QS 2024) ─────────────────────────────────────────
+  "National University of Singapore":                 {countryRank:1,  countryTier:"Tier 1 Singapore", country:"Singapore"},
+  "Nanyang Technological University":                 {countryRank:2,  countryTier:"Tier 1 Singapore", country:"Singapore"},
+
+  // ── ASIA: HONG KONG (QS HK 2024) ─────────────────────────────────────
+  "University of Hong Kong":                          {countryRank:1,  countryTier:"Tier 1 HK", country:"Hong Kong"},
+  "HKUST":                                            {countryRank:2,  countryTier:"Tier 1 HK", country:"Hong Kong"},
+  "Chinese Univ. of Hong Kong":                       {countryRank:3,  countryTier:"Tier 1 HK", country:"Hong Kong"},
+
+  // ── ASIA: JAPAN (THE Japan 2024) ──────────────────────────────────────
+  "University of Tokyo":                              {countryRank:1,  countryTier:"Tier 1 Japan", country:"Japan"},
+  "Waseda University":                                {countryRank:6,  countryTier:"Tier 2 Japan", country:"Japan"},
+
+  // ── ASIA: SOUTH KOREA ─────────────────────────────────────────────────
+  "Seoul National University":                        {countryRank:1,  countryTier:"Tier 1 South Korea", country:"South Korea"},
+
+  // ── USA (US News National Universities 2024) ──────────────────────────
+  "Massachusetts Institute of Technology":            {countryRank:1,  countryTier:"Tier 1 USA", country:"USA"},
+  "Stanford University":                              {countryRank:3,  countryTier:"Tier 1 USA", country:"USA"},
+  "Harvard University":                               {countryRank:3,  countryTier:"Tier 1 USA", country:"USA"},
+  "California Institute of Technology":               {countryRank:6,  countryTier:"Tier 1 USA", country:"USA"},
+  "Princeton University":                             {countryRank:1,  countryTier:"Tier 1 USA", country:"USA"},
+  "Yale University":                                  {countryRank:5,  countryTier:"Tier 1 USA", country:"USA"},
+  "University of Chicago":                            {countryRank:12, countryTier:"Tier 1 USA", country:"USA"},
+  "Johns Hopkins University":                         {countryRank:9,  countryTier:"Tier 1 USA", country:"USA"},
+  "Columbia University":                              {countryRank:11, countryTier:"Tier 1 USA", country:"USA"},
+  "Duke University":                                  {countryRank:7,  countryTier:"Tier 1 USA", country:"USA"},
+  "Northwestern University":                          {countryRank:9,  countryTier:"Tier 1 USA", country:"USA"},
+  "University of Pennsylvania":                       {countryRank:7,  countryTier:"Tier 1 USA", country:"USA"},
+  "Cornell University":                               {countryRank:15, countryTier:"Tier 1 USA", country:"USA"},
+  "Dartmouth College":                                {countryRank:15, countryTier:"Tier 1 USA", country:"USA"},
+  "Brown University":                                 {countryRank:9,  countryTier:"Tier 1 USA", country:"USA"},
+  "Carnegie Mellon University":                       {countryRank:23, countryTier:"Tier 1 USA", country:"USA"},
+  "UCLA":                                             {countryRank:15, countryTier:"Tier 1 USA", country:"USA"},
+  "UC Berkeley":                                      {countryRank:15, countryTier:"Tier 1 USA", country:"USA"},
+  "University of Michigan":                           {countryRank:21, countryTier:"Tier 1 USA", country:"USA"},
+  "Georgetown University":                            {countryRank:23, countryTier:"Tier 1 USA", country:"USA"},
+  "New York University":                              {countryRank:28, countryTier:"Tier 2 USA", country:"USA"},
+  "University of Notre Dame":                         {countryRank:20, countryTier:"Tier 1 USA", country:"USA"},
+  "University of Virginia":                           {countryRank:26, countryTier:"Tier 2 USA", country:"USA"},
+  "Boston University":                                {countryRank:42, countryTier:"Tier 2 USA", country:"USA"},
+  "University of Southern California":                {countryRank:27, countryTier:"Tier 2 USA", country:"USA"},
+  "Stevens Institute of Technology":                  {countryRank:78, countryTier:"Tier 3 USA", country:"USA"},
+  "University of Illinois Urbana-Champaign":          {countryRank:35, countryTier:"Tier 2 USA", country:"USA"},
+  "Illinois Institute of Technology":                 {countryRank:98, countryTier:"Tier 3 USA", country:"USA"},
+  "University of Wisconsin-Madison":                  {countryRank:35, countryTier:"Tier 2 USA", country:"USA"},
+  "Purdue University":                                {countryRank:53, countryTier:"Tier 2 USA", country:"USA"},
+  "Ohio State University":                            {countryRank:42, countryTier:"Tier 2 USA", country:"USA"},
+  "Penn State University":                            {countryRank:53, countryTier:"Tier 2 USA", country:"USA"},
+  "Missouri S&T":                                     {countryRank:122,countryTier:"Tier 3 USA", country:"USA"},
+  "Stony Brook University":                           {countryRank:98, countryTier:"Tier 3 USA", country:"USA"},
+  "University at Buffalo":                            {countryRank:98, countryTier:"Tier 3 USA", country:"USA"},
+  "Rutgers University":                               {countryRank:69, countryTier:"Tier 3 USA", country:"USA"},
+  "University of Connecticut":                        {countryRank:69, countryTier:"Tier 3 USA", country:"USA"},
+  "The University of Arizona":                        {countryRank:98, countryTier:"Tier 3 USA", country:"USA"},
+  "University of Illinois at Chicago":                {countryRank:98, countryTier:"Tier 3 USA", country:"USA"},
+  "Arizona State University":                         {countryRank:122,countryTier:"Tier 3 USA", country:"USA"},
+  "SUNY Albany":                                      {countryRank:168,countryTier:"Tier 4 USA", country:"USA"},
+  "American University":                              {countryRank:86, countryTier:"Tier 3 USA", country:"USA"},
+  "University of Maryland Baltimore County":          {countryRank:168,countryTier:"Tier 4 USA", country:"USA"},
+  "Clark University":                                 {countryRank:122,countryTier:"Tier 3 USA", country:"USA"},
+  "Auburn University":                                {countryRank:122,countryTier:"Tier 3 USA", country:"USA"},
+  "Florida International University":                 {countryRank:168,countryTier:"Tier 4 USA", country:"USA"},
+  "University of Central Florida":                    {countryRank:122,countryTier:"Tier 3 USA", country:"USA"},
+  "Colorado State University":                        {countryRank:168,countryTier:"Tier 4 USA", country:"USA"},
+  "George Mason University":                          {countryRank:168,countryTier:"Tier 4 USA", country:"USA"},
+  "University of Oregon":                             {countryRank:122,countryTier:"Tier 3 USA", country:"USA"},
+  "Oregon State University":                          {countryRank:122,countryTier:"Tier 3 USA", country:"USA"},
+  "Ohio University":                                  {countryRank:235,countryTier:"Tier 4 USA", country:"USA"},
+  "Texas State University":                           {countryRank:235,countryTier:"Tier 4 USA", country:"USA"},
+  "University of Wisconsin-Milwaukee":                {countryRank:235,countryTier:"Tier 4 USA", country:"USA"},
+  "UNC Wilmington":                                   {countryRank:235,countryTier:"Tier 4 USA", country:"USA"},
+  "SUNY Buffalo State":                               {countryRank:300,countryTier:"Tier 5 USA", country:"USA"},
+  "Pace University":                                  {countryRank:235,countryTier:"Tier 4 USA", country:"USA"},
+  "Cleveland State University":                       {countryRank:300,countryTier:"Tier 5 USA", country:"USA"},
+  "UNC Greensboro":                                   {countryRank:300,countryTier:"Tier 5 USA", country:"USA"},
 };
+
 
 // Ideal student profile per university (board %, ECs, SAT) - based on admitted student data
 var PROFILES = {
@@ -659,11 +806,6 @@ var PROFILES = {
     cbse:"96%+", ib:"41+", sat:"1500-1600",
     extras:["Aptitude test required (ENGAA/STEP/BMAT)","Interview performance crucial","Strong subject focus","Super-curricular activities in your subject"],
     tagline:"Extremely interview-focused. Deep subject engagement is prioritised over broad extracurriculars."
-  },
-  "Indian Institute of Technology Bombay": {
-    cbse:"92%+ (boards) + JEE Advanced top 2000","ib":"38+ equivalent", sat:"1480-1580",
-    extras:["JEE Advanced (primary route)","Science Olympiad medals","Programming competitions","Research internship at IISc/TIFR"],
-    tagline:"JEE Advanced is the primary route. International students may apply via SAT/DSAT. Extremely selective."
   },
   "National University of Singapore": {
     cbse:"90%+", ib:"38+", sat:"1400-1560",
@@ -711,11 +853,23 @@ function getCurrencyForCountry(country) {
 
 function fmDual(usd, country) {
   if(!usd||usd<=0) return "--";
-  var curr = getCurrencyForCountry(country);
   var usdStr = "$"+usd.toLocaleString();
-  if(curr[0]==="USD") return usdStr;
-  var local = Math.round(usd * curr[2]);
-  return usdStr+" / "+curr[1]+local.toLocaleString();
+  if(country==="USA") return usdStr;
+  // Use a ±5% range to reflect FX fluctuation
+  var rates = {India:[83,88,"₹",100000], "Middle East":[3.6,3.7,"AED ",1], UK:[0.77,0.81,"£",1], Australia:[1.49,1.57,"A$",1], Canada:[1.34,1.40,"C$",1], Asia:[1.32,1.36,"S$",1], Europe:[0.90,0.94,"€",1]};
+  var r = rates[country];
+  if(!r) return usdStr;
+  var sym = r[2];
+  var div = r[3]; // 100000 for lakh conversion
+  if(div===100000){
+    // Show in lakhs for India
+    var lo = Math.round(usd*r[0]/div*10)/10;
+    var hi = Math.round(usd*r[1]/div*10)/10;
+    return usdStr+' <span style="font-size:10px;color:var(--mu)">(approx. '+sym+lo+'L–'+sym+hi+'L/yr)</span>';
+  }
+  var lo2 = Math.round(usd*r[0]);
+  var hi2 = Math.round(usd*r[1]);
+  return usdStr+' <span style="font-size:10px;color:var(--mu)">('+sym+lo2.toLocaleString()+'–'+sym+hi2.toLocaleString()+')</span>';
 }
 
 function getCountryRank(uniName) {
@@ -842,11 +996,13 @@ function getFiltered(){
   var tier=document.getElementById("f-tier").value;
   var major=document.getElementById("f-major").value;
   var satrange=document.getElementById("f-satrange").value;
+  var search=(document.getElementById("f-search")||{value:""}).value.toLowerCase().trim();
   return UNIS.filter(function(u){
     if(country&&u.country!==country)return false;
     if(tier&&u.tier!==parseInt(tier))return false;
     if(major&&!u.fields.includes(major))return false;
     if(satrange!==""){var b=SAT_BANDS[parseInt(satrange)];if(!b||u.satMin<b.min||u.satMin>b.max)return false;}
+    if(search&&!u.university.toLowerCase().includes(search)&&!u.state.toLowerCase().includes(search)&&!u.country.toLowerCase().includes(search))return false;
     return true;
   });
 }
@@ -1003,13 +1159,17 @@ function openDP(name){
   // Fees tab
   html+='<div class="tc" id="t-fees">';
   html+='<div class="st">Scholarship range at this tier</div>';
-  html+='<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:1rem;margin-bottom:1rem;font-size:16px;font-weight:700;color:var(--gr)">'+schRange+' per year</div>';
+  html+='<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:1rem;margin-bottom:1rem">';
+  html+='<div style="font-size:16px;font-weight:700;color:var(--gr);margin-bottom:4px">'+schRange+'</div>';
+  html+='<div style="font-size:11px;color:#166534;line-height:1.6">⚠️ Scholarship amounts shown are indicative ranges based on publicly available data. Duration varies — some are renewable annually (subject to GPA), some are one-time awards. % of recipients is approximate. Always verify directly with the university.</div></div>';
   html+='<div class="st">Fee breakdown</div><div class="ig">';
   html+='<div class="ib"><div class="ib-l">Annual tuition</div><div class="ib-v" style="font-size:13px">'+fmDual(ex.tuitionUSD,u.country)+'</div></div>';
   html+='<div class="ib"><div class="ib-l">Living expenses</div><div class="ib-v" style="font-size:13px">'+fmDual(ex.living,u.country)+'</div></div>';
   html+='<div class="ib"><div class="ib-l">Total per year</div><div class="ib-v" style="font-size:13px">'+fmDual(ex.tuitionUSD+ex.living,u.country)+'</div></div>';
   html+='<div class="ib"><div class="ib-l">4-year estimate</div><div class="ib-v" style="font-size:13px">'+fmDual((ex.tuitionUSD+ex.living)*4,u.country)+'</div></div>';
-  html+='</div></div>';
+  html+='</div>';
+  html+='<div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:0.75rem 1rem;font-size:11px;color:#92400e;line-height:1.6;margin-bottom:1rem">💱 Local currency amounts shown as an approximate range (±5%) to reflect exchange rate fluctuation. Actual costs depend on the rate at time of payment. Verify current rates before planning finances.</div>';
+  html+='</div>';
   // ROI tab
   html+='<div class="tc" id="t-roi">';
   html+='<div class="st">Return on investment</div><div class="roi-g">';
@@ -1058,7 +1218,7 @@ function init(){
   render();
   document.getElementById("unlock-btn").addEventListener("click",unlockResults);
   document.getElementById("reset-btn").addEventListener("click",function(){
-    ["f-country","f-tier","f-major","f-satrange"].forEach(function(id){var el=document.getElementById(id);if(el)el.value="";});render();
+    ["f-country","f-tier","f-major","f-satrange","f-search"].forEach(function(id){var el=document.getElementById(id);if(el)el.value="";});render();
   });
   document.getElementById("cs").addEventListener("input",onScoreInput);
   document.getElementById("ts").addEventListener("input",onScoreInput);
